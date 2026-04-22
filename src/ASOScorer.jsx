@@ -171,11 +171,11 @@ export default function ASOScorer() {
       const imgs = [];
       const labels = [];
       if (icon) {
-        imgs.push({ type: "image", source: { type: "base64", media_type: icon.type || "image/png", data: await fileToB64(icon) } });
+        imgs.push({ type: "image", source: { type: "base64", media_type: "image/jpeg", data: await fileToB64(icon) } });
         labels.push("Image 1 = APP ICON.");
       }
       for (let i = 0; i < shots.length; i++) {
-        imgs.push({ type: "image", source: { type: "base64", media_type: shots[i].type || "image/png", data: await fileToB64(shots[i]) } });
+        imgs.push({ type: "image", source: { type: "base64", media_type: "image/jpeg", data: await fileToB64(shots[i]) } });
         labels.push(`Image ${icon ? i + 2 : i + 1} = SCREENSHOT ${i + 1}.`);
       }
 
