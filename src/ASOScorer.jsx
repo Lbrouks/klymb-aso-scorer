@@ -28,12 +28,21 @@ const sevColor = (s) => s === "critical" ? T.red : s === "underperforming" ? T.o
 const sevLabel = (s) => s === "critical" ? "Critical — leaking installs" : s === "underperforming" ? "Underperforming — real work needed" : s === "decent" ? "Decent — leaving money on the table" : "Strong — refine the edges";
 const scColor = (n) => n <= 1 ? T.red : n === 2 ? T.orange : n === 3 ? T.pink : T.green;
 
-const fileToB64 = (f) => new Promise((res, rej) => {
-  const r = new FileReader();
-  r.onload = () => res(r.result.split(",")[1]);
-  r.onerror = rej;
-  r.readAsDataURL(f);
+const compressImage = (file, maxWidth = 800, quality = 0.6) => new Promise((res) => {
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    const ratio = Math.min(maxWidth / img.width, 1);
+    canvas.width = img.width * ratio;
+    canvas.height = img.height * ratio;
+    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL('image/jpeg', quality);
+    res(dataUrl.split(',')[1]);
+  };
+  img.src = URL.createObjectURL(file);
 });
+
+const fileToB64 = (f) => compressImage(f);
 
 const extractJSON = (str) => {
   const s = str.replace(/```json\s*/gi, "").replace(/```/g, "");
