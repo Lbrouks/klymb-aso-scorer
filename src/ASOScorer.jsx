@@ -200,6 +200,11 @@ RESPONSE: Single JSON object only. First char { last char }. No text before/afte
 }
 Severity: 0-8=critical, 9-12=underperforming, 13-16=decent, 17-20=strong.`;
 
+      const userContent = [
+        { type: "text", text: "Audit this app. URL: " + url + ". App ID: " + appId + ", Country: " + country + (labels.length ? ". Images: " + labels.join(" ") : ". No images.") },
+        ...imgs,
+      ];
+
       const res = await fetch("/api/claude", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
