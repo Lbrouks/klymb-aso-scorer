@@ -132,7 +132,7 @@ export default function ASOScorer() {
         await fetch(WEBHOOK_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+          body: JSON.stringify({ appId: appId, country: country, system: sys,
             email,
             app_url: url,
             app_name: appData?.trackName || "",
@@ -203,13 +203,8 @@ Severity: 0-8=critical, 9-12=underperforming, 13-16=decent, 17-20=strong.`;
       const res = await fetch("/api/claude", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514", max_tokens: 4096, system: sys,
-          tools: [{ type: "web_fetch_20250910", name: "web_fetch", max_uses: 2, allowed_domains: ["itunes.apple.com"] }],
-          messages: [{ role: "user", content: [
-            { type: "text", text: `Audit this app. URL: ${url}\nApp ID: ${appId}, Country: ${country}\nFetch: ${itunesUrl}\n${labels.length ? "Images:\n" + labels.join("\n") : "No images."}` },
-            ...imgs,
-          ] }],
+        body: JSON.stringify({ appId: appId, country: country, system: sys,
+          model: "claude-sonnet-4-20250514", max_tokens: 4096,
         }),
       });
 
