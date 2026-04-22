@@ -200,7 +200,7 @@ RESPONSE: Single JSON object only. First char { last char }. No text before/afte
 }
 Severity: 0-8=critical, 9-12=underperforming, 13-16=decent, 17-20=strong.`;
 
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/claude", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
