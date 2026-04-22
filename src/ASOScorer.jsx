@@ -203,8 +203,11 @@ Severity: 0-8=critical, 9-12=underperforming, 13-16=decent, 17-20=strong.`;
       const res = await fetch("/api/claude", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ appId: appId, country: country, system: sys,
-          model: "claude-sonnet-4-20250514", max_tokens: 4096,
+        body: JSON.stringify({
+          appId: appId,
+          country: country,
+          system: sys,
+          messages: [{ role: "user", content: userContent }],
         }),
       });
 
